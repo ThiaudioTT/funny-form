@@ -33,6 +33,7 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 export class AppComponent {
   funnyForm: FormGroup;
   isSubmitted = false;
+  alreadySubmitted = false;
   formShake = false;
   randomFeedback = '';
 
@@ -67,6 +68,15 @@ export class AppComponent {
   }
 
   onSubmit() {
+    // user can't submit the form if isn't valid, so when we already submitted the form, we shake it
+    if (this.isSubmitted) {
+      this.alreadySubmitted = true;
+      this.formShake = true;
+      setTimeout(() => {
+        this.formShake = false;
+      }, 500);
+      return;
+    }
     if (this.funnyForm.valid) {
       this.isSubmitted = true;
       this.snackBar.open('Form submitted successfully! (Not really)', 'Cool!', {
@@ -74,17 +84,6 @@ export class AppComponent {
         horizontalPosition: 'center',
         verticalPosition: 'bottom',
       });
-    } else {
-      this.formShake = true;
-      setTimeout(() => {
-        this.formShake = false;
-      }, 500);
-
-      this.funnyForm.markAllAsTouched();
-      this.randomFeedback =
-        this.funnyFeedbacks[
-          Math.floor(Math.random() * this.funnyFeedbacks.length)
-        ];
     }
   }
 }

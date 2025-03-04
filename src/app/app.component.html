@@ -67,6 +67,12 @@
           {{ randomFeedback }}
         </div>
 
+        <div class="funny-feedback" style="color: red" *ngIf="alreadySubmitted">
+          <p>
+            Bro, you already submitted the form! <br />Please, stop touching me.
+          </p>
+        </div>
+
         <div class="form-actions">
           <button
             mat-raised-button
