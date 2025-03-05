@@ -12,6 +12,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import CustomValidations from '../validations/CustomValidations';
 
 @Component({
   selector: 'app-root',
@@ -50,8 +51,30 @@ export class AppComponent {
 
   constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
     this.funnyForm = this.fb.group({
-      superheroName: ['', [Validators.required, Validators.minLength(3)]],
-      secretTalent: ['', Validators.required],
+      superheroName: [
+        '',
+        [
+          Validators.compose([
+            Validators.required,
+            Validators.minLength(3),
+            CustomValidations.forbiddenWords(['superman', 'batman', 'hero']),
+          ]),
+        ],
+      ],
+      secretTalent: [
+        '',
+        Validators.compose([
+          Validators.required,
+          Validators.minLength(3),
+          CustomValidations.forbiddenWords([
+            'coding',
+            'developing',
+            'forms',
+            'code',
+          ]),
+        ]),
+        ,
+      ],
       reason: ['', [Validators.required, Validators.maxLength(100)]],
     });
   }

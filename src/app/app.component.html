@@ -27,6 +27,11 @@
           >
             That name is too short for a superhero!
           </mat-error>
+          <mat-error
+            *ngIf="funnyForm.get('superheroName')?.hasError('forbiddenWord')"
+          >
+            You can't be a superhero with that name!
+          </mat-error>
         </mat-form-field>
 
         <mat-form-field class="form-field" appearance="outline">
@@ -41,6 +46,11 @@
             *ngIf="funnyForm.get('secretTalent')?.hasError('required')"
           >
             Come on, everyone has at least one weird talent!
+          </mat-error>
+          <mat-error
+            *ngIf="funnyForm.get('secretTalent')?.hasError('forbiddenWord')"
+          >
+            Haha, cool. But we need a real talent!
           </mat-error>
         </mat-form-field>
 
